@@ -9,7 +9,7 @@ const config = {
   entry: './src/index.js',
   mode: process.env.NODE_ENV || 'development',
   output: {
-    path: path.resolve(__dirname, 'deploy'),
+    path: path.resolve(__dirname, 'dist'),
     // clean: true,
   },
   devServer: {
