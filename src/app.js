@@ -21,8 +21,10 @@ const app = () => {
     e.preventDefault()
     const input = document.querySelector('#url-input')
     state.form.data.url = input.value;
-    // state.form.data.links.push(input.value);
-
+    state.form.data.links.push(input.value);
+    schema.validate(state.form.data)
+      .then((data) => console.log(data))
+      .catch((err) => console.log(err))
     // try {
     //   schema.validate(state.form.data)
     // } catch (er) {

@@ -6,7 +6,7 @@ const schema = Yup.object({
   url: Yup
   .string()
   .url(),
-  links: Yup.mixed().notOneOf('RSS уже существует'),
+  links: Yup.mixed().notOneOf([], 'RSS уже существует'),
 });
 
 export { schema };
