@@ -1,4 +1,6 @@
-import { schema } from "./validate";
+import onChange from "on-change";
+import { validation } from "./validate";
+import { render } from "./view";
 
 const app = () => {
   
@@ -11,9 +13,13 @@ const app = () => {
         links: []
       },
       erorr: ''
+    },
+    request: {
+      status: ''
     }
   }
 
+  const watchedState = onChange(state, render);
 
   const form = document.querySelector('.rss-form')
   
@@ -21,17 +27,18 @@ const app = () => {
     e.preventDefault()
     const input = document.querySelector('#url-input')
     state.form.data.url = input.value;
-    state.form.data.links.push(input.value);
-    schema.validate(state.form.data)
-      .then((data) => console.log(data))
-      .catch((err) => console.log(err))
-    // try {
-    //   schema.validate(state.form.data)
-    // } catch (er) {
-    //   state.form.erorr = er.message
-    //   console.log(state.form.erorr)
-    // }
-    console.log(state.form.data)
+    
+    validation(state.form.data)
+      .then((url) => {
+        state.form.data.links.push(url);
+        watchedState.form.status = 'is valid'
+        // render(state)
+      })
+      .catch((err) => {
+        state.form.data.erorr = err.message
+        state.form.status = 'is not valid'
+        render(state)
+      })
   })
 };
 

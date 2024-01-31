@@ -1,12 +1,17 @@
 //валидатор адреса url
 
-import * as Yup from 'yup';
+import * as yup from 'yup';
 
-const schema = Yup.object({
-  url: Yup
-  .string()
-  .url(),
-  links: Yup.mixed().notOneOf([], 'RSS уже существует'),
-});
 
-export { schema };
+
+const validation = ({url, links}) => {
+  const schema = yup
+    .string()
+    .required()
+    .url('Ссылка должна быть валидным URL')
+    .notOneOf(links, 'RSS уже существует')
+    .validate(url);
+  return schema;
+}
+
+export { validation };
